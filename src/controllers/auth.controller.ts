@@ -27,6 +27,25 @@ class AuthController {
       next(error);
     }
   };
+
+  public register = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      await this.authService.register(req.body);
+
+      res.status(201).json({
+        success: true,
+        message: "Register Success",
+        data: null,
+      });
+    } catch (error) {
+      logger.error(`[AuthController] - [register]: ${error}`);
+      next(error);
+    }
+  };
 }
 
 export default AuthController;

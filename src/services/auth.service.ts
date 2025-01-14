@@ -1,9 +1,10 @@
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import { LoginDTO } from "../interface/auth.interface";
+import { LoginDTO, RegisterDTO } from "../interface/auth.interface";
 import UserRepository from "../repositories/user.repository";
 import { HttpException } from "../middlewares/error.middleware";
+import e from "express";
 
 dotenv.config();
 
@@ -28,6 +29,25 @@ class AuthService {
     });
 
     return { token };
+  }
+
+  public async register(data: RegisterDTO): Promise<void> {
+    const { username, email, password } = data;
+
+    const existingUser = await UserRepository.findByEmail(email);
+    if (existingUser) {
+      throw new HttpException(409, "Email already exists");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await UserRepository.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    return;
   }
 }
 

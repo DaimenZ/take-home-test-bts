@@ -5,6 +5,12 @@ const authSchemas = {
     username: Joi.string().required(),
     password: Joi.string().required(),
   }),
+
+  register: Joi.object({
+    username: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
 };
 
 export default authSchemas;

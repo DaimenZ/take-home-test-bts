@@ -18,6 +18,11 @@ class AuthRoute implements Routes {
       validate(authSchemas.login),
       this.authController.login
     );
+    this.router.post(
+      "/register",
+      validate(authSchemas.register),
+      this.authController.register
+    );
   }
 }
 

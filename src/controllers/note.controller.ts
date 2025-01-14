@@ -48,6 +48,26 @@ class NoteController {
       next(error);
     }
   };
+
+  public deleteChecklist = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { checklistId } = req.params;
+
+      await this.noteService.deleteChecklist(checklistId);
+
+      res.status(200).json({
+        success: true,
+        message: "Successfully deleted checklist",
+        data: null,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default NoteController;

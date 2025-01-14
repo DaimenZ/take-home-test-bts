@@ -21,6 +21,23 @@ class ChecklistRepository {
     }
   }
 
+  static async findById(id: string): Promise<Checklist | null> {
+    try {
+      const checklist = await database.checklist.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      return checklist;
+    } catch (error) {
+      logger.error(
+        `[Database Error] - [ChecklistRepository] - [findById]: ${error}`
+      );
+      throw new HttpException(500, "Database Error");
+    }
+  }
+
   static async create(
     userId: string,
     data: {
@@ -39,6 +56,23 @@ class ChecklistRepository {
     } catch (error) {
       logger.error(
         `[Database Error] - [ChecklistRepository] - [create]: ${error}`
+      );
+      throw new HttpException(500, "Database Error");
+    }
+  }
+
+  static async delete(id: string): Promise<void> {
+    try {
+      await database.checklist.delete({
+        where: {
+          id,
+        },
+      });
+
+      return;
+    } catch (error) {
+      logger.error(
+        `[Database Error] - [ChecklistRepository] - [delete]: ${error}`
       );
       throw new HttpException(500, "Database Error");
     }

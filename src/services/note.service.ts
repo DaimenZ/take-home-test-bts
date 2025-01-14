@@ -19,6 +19,17 @@ class NoteService {
 
     return;
   }
+
+  public async deleteChecklist(id: string): Promise<void> {
+    const checklist = await ChecklistRepository.findById(id);
+    if (!checklist) {
+      throw new Error("Checklist not found");
+    }
+
+    await ChecklistRepository.delete(id);
+
+    return;
+  }
 }
 
 export default NoteService;

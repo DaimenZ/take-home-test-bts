@@ -24,7 +24,7 @@ class AuthService {
       throw new HttpException(401, "Invalid credentials");
     }
 
-    const token = jwt.sign({ user_email: user.email }, tokenSecret, {
+    const token = jwt.sign({ user_id: user.id }, tokenSecret, {
       expiresIn: "12h",
     });
 

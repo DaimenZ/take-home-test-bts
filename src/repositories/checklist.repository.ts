@@ -20,6 +20,29 @@ class ChecklistRepository {
       throw new HttpException(500, "Database Error");
     }
   }
+
+  static async create(
+    userId: string,
+    data: {
+      name: string;
+    }
+  ): Promise<Checklist> {
+    try {
+      const checklist = await database.checklist.create({
+        data: {
+          ...data,
+          userId,
+        },
+      });
+
+      return checklist;
+    } catch (error) {
+      logger.error(
+        `[Database Error] - [ChecklistRepository] - [create]: ${error}`
+      );
+      throw new HttpException(500, "Database Error");
+    }
+  }
 }
 
 export default ChecklistRepository;

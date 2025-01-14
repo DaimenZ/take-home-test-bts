@@ -28,6 +28,26 @@ class NoteController {
       next(error);
     }
   };
+
+  public createChecklist = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const user_id = req.user_id!;
+
+      await this.noteService.createChecklist(user_id, req.body);
+
+      res.status(201).json({
+        success: true,
+        message: "Successfully created checklist",
+        data: null,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default NoteController;

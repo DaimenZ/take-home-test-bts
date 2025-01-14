@@ -17,6 +17,11 @@ class NoteRoute implements Routes {
       authenticateToken,
       this.noteController.getAllChecklists
     );
+    this.router.post(
+      "/checklist",
+      authenticateToken,
+      this.noteController.createChecklist
+    );
   }
 }
 
